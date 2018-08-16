@@ -1,3 +1,8 @@
+import time
+
+import itertools
+
+
 class Solution:
 	def combine(self, n, k):
 		"""
@@ -17,9 +22,12 @@ class Solution:
 		:type k: int
 		:rtype: List[List[int]]
 		"""
+		start = time.time()
 		self.res = []
 		nums = [i+1 for i in range(n)]
 		self.dsf([],nums,k)
+		end = time.time()
+		print(end - start)
 		return self.res
 
 	def dsf(self,temp,nums,k):
@@ -28,9 +36,23 @@ class Solution:
 		elif k > 0:
 			for i in range(len(nums)):
 				self.dsf(temp+[nums[i]],nums[0:i]+nums[i+1:],k-1)
+	def dsf1(self,temp,nums,k):
+		if k == 0:
+			self.res.append(temp)
+			return
+		for i in range(len(nums)):
+			self.dsf1(temp+[nums[i]],nums[i+1:],k-1)
+
+	def combine1(self, n, k):
+		nums = [i + 1 for i in range(n)]
+		res = []
+		for item in itertools.combinations(nums,k):
+			res.append(item)
+		return res
+
 n = 10
-k = 3
+k = 4
 a = Solution()
-print(a.combine(n,k))
+print(a.combine1(n,k))
 
 
