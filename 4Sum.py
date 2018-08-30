@@ -1,3 +1,6 @@
+import itertools
+
+
 class Solution:
 	def fourSum(self, nums, target):
 		"""
@@ -49,6 +52,14 @@ class Solution:
 						left += 1
 
 		return res
+
+	def fourSum1(self, nums, target):
+		res = []
+		for i in itertools.combinations(nums,4):
+			if sum(i) == target and i not in res:
+				res.append(i)
+		return res
+
 nums = [1, 0, -1, 0, -2, 2]
 target = -1
 nums1 = [-1,0,1,2,-1,-4]
@@ -57,4 +68,4 @@ nums3 = [-3,-2,-1,0,0,1,2,3]
 target3 = 0
 target2 = 0
 a = Solution()
-print(a.fourSum(nums3,target3))
+print(a.fourSum1(nums3,target3))
