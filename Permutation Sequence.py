@@ -21,14 +21,15 @@ class Solution:
 		"""
 		self.res = []
 		nums = [str(i+1) for i in range(n)]
-		self.dft([], nums,k,n)
-		return "".join(self.res[-1])
+		self.dft("", nums,k,n)
+		print(self.res)
+		return int(self.res[-1])
 
 	def dft(self, sing_list,nums,k,n):
 		if n == 0 :
 			self.res.append(sing_list)
 		if len(self.res) < k:
 			for i in range(len(nums)):
-				self.dft(sing_list + [nums[i]], nums[0:i] + nums[i + 1:],k, n - 1)
+				self.dft(sing_list + nums[i], nums[0:i] + nums[i + 1:],k, n - 1)
 a = Solution()
-print(a.getPermutation(9,231123))
+print(a.getPermutation(3,3))
