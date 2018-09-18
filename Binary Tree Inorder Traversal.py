@@ -36,6 +36,20 @@ class Solution:
 				root = temp.right
 		return res
 
+	def inorderTraversal2(self, root):
+		res = []
+		stack = []
+		p = root
+		while p or stack:
+			if p:
+				stack.append(p)
+				p = p.left
+			else:
+				tmp = stack.pop()
+				res.append(tmp.val)
+				p = p.right
+		return res
+
 
 
 
@@ -48,6 +62,6 @@ c = TreeNode(3)
 a.right = b
 b.left = c
 S = Solution()
-S.inorderTraversal(a)
+# S.inorderTraversal(a)
 print("----")
-print(S.inorderTraversal1(a))
+print(S.inorderTraversal2(a))

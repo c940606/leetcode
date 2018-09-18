@@ -33,6 +33,16 @@ class Solution:
 				j += 1
 		return intervals
 
+	def merge1(self, intervals):
+		intervals = sorted(intervals,key=lambda x : x.start)
+		res = []
+		for interval in intervals:
+			if not res or res[-1].end < interval.start:
+				res.append(interval)
+			else:
+				res[-1].end = max(res[-1].end,interval.end)
+		return res
+
 a = Solution()
 intervals1 = [[1,3],[2,6],[8,10],[15,18]]
 

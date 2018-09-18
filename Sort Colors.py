@@ -16,10 +16,19 @@ class Solution:
 		nums.clear()
 		nums.extend([[0]*a[0]+[1]*a[1]+[2]*a[2]])
 		# return nums
-
+	def sortColors1(self, nums):
+		c = Counter(nums)
+		id = 0
+		for i in range(3):
+			if i in c:
+				for j in range(c[i]):
+					nums[id] = i
+					id += 1
+		return nums
 
 
 
 a = Solution()
 num = [2,0,2,1,1,0]
-print (a.sortColors(num))
+num1 = [1]
+print (a.sortColors1(num1))

@@ -17,6 +17,9 @@ class Solution:
 			if val.isalnum():
 				jup += val.lower()
 		return jup == jup[::-1]
-
+	def isPalindrome1(self, s):
+		new_s = list(map(lambda x: x.lower() if x.isalnum() else None, s))
+		print(new_s)
+		return new_s == new_s[::-1]
 a = Solution()
-print(a.isPalindrome("race a car"))
+print(a.isPalindrome1("race a car"))

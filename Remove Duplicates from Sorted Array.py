@@ -20,8 +20,43 @@ class Solution:
 				nums.pop(i+1)
 			i += 1
 		return i+1
+
+	def removeDuplicates1(self, nums):
+		n = len(nums)
+		if n < 2:
+			return n
+		pre = nums[0]
+		index = 1
+		for i in range(1,n):
+			if pre != nums[i]:
+				pre = nums[i]
+				nums[index] = pre
+				index += 1
+		return nums
+
+	def removeDuplicates2(self, nums):
+		n = len(nums)
+		if n < 2:
+			return n
+		index = 1
+		pre = nums[0]
+		j = 1
+		while True:
+			while j < n and pre == nums[j]:
+				j += 1
+			if j == n:
+				break
+			pre = nums[j]
+			nums[index] = pre
+			index += 1
+		return nums
+
+
+
+
+
 a = Solution()
 nums1 = [1,1,2]
 nums2 = [0,0,1,1,1,2,2,3,3,4]
 nums3 = [1,23,4,2,1]
-print(a.removeDuplicates(nums3))
+print(a.removeDuplicates2(nums1))

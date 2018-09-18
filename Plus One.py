@@ -13,6 +13,26 @@ class Solution:
 		"""
 		num = int("".join(map(str,digits)))+1
 		return list(map(int,str(num)))
+
+	def plusOne1(self, digits):
+		n = len(digits)
+		flag = 1
+		i = n-1
+		while True:
+			if i == -1:
+				digits.insert(0,1)
+				break
+			temp = digits[i] + flag
+			flag = temp // 10
+			digits[i] = temp % 10
+			if flag == 0:
+				break
+			else:
+				i -= 1
+		return digits
+
+
+
 a = Solution()
-obj = [1,2,3]
-print(a.plusOne(obj))
+obj = [9,9,9,9]
+print(a.plusOne1(obj))

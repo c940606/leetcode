@@ -17,7 +17,9 @@ class Solution:
 		# print(strs)
 		for item in strs:
 			# print(item)
+			print(sorted(item))
 			temp = "".join(sorted(item))
+			print(temp)
 			if temp in lookup:
 				lookup[temp] += [item]
 			else:

@@ -60,7 +60,47 @@ class Solution:
 				res.append(i)
 		return res
 
-nums = [1, 0, -1, 0, -2, 2]
+	def fourSum2(self, nums, target):
+		res = []
+		if len(nums)<4:
+			return res
+		nums.sort()
+		n =  len(nums)
+		for i in range(n-3):
+			if i>0 and nums[i] == nums[i-1]:
+				continue
+			if nums[i]+nums[i+1]+nums[i+2]+nums[i+3] > target:
+				break
+			if nums[i]+nums[n-3]+nums[n-2]+nums[n-2] < target:
+				continue
+			for j in range(i+1,n-2):
+				if j>i+1 and nums[j]==nums[j-1]:
+					continue
+				if nums[i]+nums[j]+nums[j+1]+nums[j+2]>target:
+					break
+				if nums[i]+nums[j]+nums[n-2]+nums[n-1]<target:
+					continue
+				low,high = j+1,n-1
+				while low<high:
+					temp = nums[i] + nums[j]+nums[low]+nums[high]
+					if temp == target:
+						res.append([nums[i],nums[j],nums[low],nums[high]])
+						while low<high and nums[low] == nums[low+1]:
+							low += 1
+						while low<high and nums[high] == nums[high-1]:
+							high -= 1
+						low += 1
+						high -= 1
+					elif  temp < target:
+						low += 1
+					else:
+						high -= 1
+		return res
+
+
+
+
+nums = [1,2,-2,-1]
 target = -1
 nums1 = [-1,0,1,2,-1,-4]
 nums2 = [1,0,-1,0,-2,2]
@@ -68,4 +108,4 @@ nums3 = [-3,-2,-1,0,0,1,2,3]
 target3 = 0
 target2 = 0
 a = Solution()
-print(a.fourSum1(nums3,target3))
+print(a.fourSum2(nums,target3))

@@ -1,3 +1,4 @@
+from itertools import  permutations
 class Solution:
 	def permute(self, nums):
 		"""
@@ -24,6 +25,10 @@ class Solution:
 			self.res.append(sing_list)
 		for i in range(len(nums)):
 			self.dft(sing_list+[nums[i]],nums[0:i]+nums[i+1:])
+
+	def permute1(self, nums):
+		return list(permutations(nums))
+
 a = Solution()
 nums = [1,2,3]
-print(a.permute(nums))
+print(a.permute1(nums))

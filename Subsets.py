@@ -39,7 +39,12 @@ class Solution:
 		results = [[]]
 		for i in nums:
 			results = results + [[i] + num for num in results]
+
+			print(results)
 		return results
+
+	def subsets2(self, nums):
+		 pass
 
 
 nums = [1,2,3]

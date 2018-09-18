@@ -25,6 +25,20 @@ class Solution:
 			self.singStr(s+"(",left_parenthesis+1,righ_parenthesis,n)
 		if left_parenthesis > righ_parenthesis:
 			self.singStr(s+")",left_parenthesis,righ_parenthesis+1,n)
+
+	def generateParenthesis1(self, n):
+			res = []
+
+			def helper(s, left, right, n):
+				if left == n and right == n:
+					res.append(s)
+				if left < n:
+					helper(s + "(", left + 1, right, n)
+				if left > right:
+					helper(s + ")", left, right + 1, n)
+
+			helper("", 0, 0, n)
+			return res
 a = Solution()
-print(a.generateParenthesis(13))
-print(len(a.res))
+print(a.generateParenthesis1(4))
+# print(len(a.res))

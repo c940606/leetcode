@@ -28,3 +28,24 @@ class Solution(object):
 			res.append(p.val)
 			p = p.next
 		return res == res[::-1]
+
+	def isPalindrome1(self, head):
+		# 先找中点
+		slow = head
+		fast = head
+		while fast and fast.next:
+			slow = slow.next
+			fast = fast.next.next
+		# 翻转后面的
+		pre = None
+		while slow:
+			temp = slow.next
+			slow.next = pre
+			pre = slow
+			slow = temp
+		while pre:
+			if pre.val != head.val:
+				return False
+			pre = pre.next
+			head = head.next
+		return True
