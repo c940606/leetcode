@@ -32,6 +32,28 @@ class Solution:
 
 		for i in range(len(sort_nums)):
 			self.trace(temp+[sort_nums[i]],sort_nums[0:i]+sort_nums[i+1:])
-nums = [8,5,3,2]
+
+	def nextPermutation1(self, nums):
+		'''
+		思路:
+		 12435 --> 12453
+		 有更多的前缀
+		:param nums:
+		:return:
+		'''
+		n = len(nums)
+		i_flag = 0
+		for i in range(n-1,-1,-1):
+			if nums[i]>nums[i-1]:
+				i_flag = i
+				break
+		if i_flag != 0:
+			for j in range(n-1,i_flag-1,-1):
+				if nums[j] > nums[i_flag-1]:
+					nums[j],nums[i_flag-1] = nums[i_flag-1],nums[j]
+					break
+		nums[i_flag:] = nums[i_flag:][::-1]
+		return nums
+nums = [8,3,5,2]
 a = Solution()
-print(a.nextPermutation(nums))
+print(a.nextPermutation1(nums))

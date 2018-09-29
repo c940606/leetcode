@@ -1,3 +1,4 @@
+
 import sys
 
 class Solution:
@@ -68,6 +69,18 @@ class Solution:
 			if j - i <= nums[i]:
 				j = i
 		return j==0
+
+	def canJump3(self, nums):
+		n = len(nums)
+		i = 0
+		while i< n:
+			j = i+nums[i]
+			temp = 0
+			for k in range(i,j+1):
+				if temp<k+nums[k]:
+					temp = k+nums[k]
+			i = temp
+
 
 a = Solution()
 # [3,2,1,0,4]

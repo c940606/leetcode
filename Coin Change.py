@@ -57,12 +57,79 @@ class Solution(object):
 				min_list = item
 		return min_list
 
+	def coinChange1(self, coins, amount):
+		"""
+		:type coins: List[int]
+		:type amount: int
+		:rtype: int
+		"""
+		coins = sorted(coins, reverse=True)
+		print(coins)
+		count = 0
+		while True:
+			for coin in coins:
+				print(amount,count)
+				while amount - coin >= 0:
+					count += 1
+					amount -= coin
+				if amount == 0:
+					return count
+			return -1
+
+	def coinChange3(self, coins, amount):
+		"""
+		:type coins: List[int]
+		:type amount: int
+		:rtype: int
+		"""
+		if coins == []:
+			return -1
+		if amount == 0:
+			return 0
+		dp = [0] * (amount + 1)
+
+		for i in range(1, amount + 1):
+			min_count = amount * 10
+			for coin in coins:
+
+				if i - coin >= 0 and min_count >= dp[i - coin] + 1:
+					min_count = dp[i - coin] + 1
+			dp[i] = min_count
+		if dp[-1] == amount * 10:
+			return -1
+		return dp[-1]
+
+	def coinChange2(self, coins, amount):
+		if amount == 0:
+			return 0
+		if coins == []:
+			return -1
+		coins.sort()
+		dp = [0] * (amount + 1)
+		for i in range(1,amount+1):
+			min_num = 0
+			for coin in coins:
+				if i == coin:
+					dp[i] = 1
+					continue
+				print(dp)
+				print(i)
+
+				if i-coin> 0 and dp[i-coin] < min_num:
+					min_num =
+				dp[i] = min_num
+		print(dp)
+		if dp[-1]==0:
+			return -1
+		return dp[-1]
 
 
 
 
 a = Solution()
-print(a.coinChange(coins = [186,419,83,408], amount = 6249))
+print(a.coinChange2(coins = [186,419,83,408], amount = 6249))
+print(a.coinChange2(coins = [2], amount = 1))
+print(a.coinChange2([1,2147483647],2))
 # print(a.min_list([[2, 2], [2, 1, 1]]))
 # [186,419,83,408]
 # 6249

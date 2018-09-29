@@ -36,8 +36,23 @@ class Solution(object):
 		zhongXun(root)
 		# print(res)
 		return res[k-1]
+
+	def kthSmallest1(self, root, k):
+		self.res = None
+		self.count = 0
+		def helper(root):
+			if not root:
+				return
+			helper(root.left)
+			self.count += 1
+			if self.count == k:
+				self.res = root.val
+				return
+			helper(root.right)
+		return self.res
+
 treelist = [3,1,4,"#",2]
 t = creatTree()
 tree = 	t.list_to_tree(treelist,TreeNode,0)
 a = Solution()
-print(a.kthSmallest(tree,1))
+print(a.kthSmallest1(tree,1))
