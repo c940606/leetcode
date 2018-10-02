@@ -1,4 +1,4 @@
-import itertools
+ import itertools
 
 
 class Solution:

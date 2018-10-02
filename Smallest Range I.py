@@ -27,5 +27,10 @@ class Solution(object):
 			return 0
 		return max_num-max2_num-2*K
 
+	def smallestRangeI1(self, A, K):
+		n = len(A)
+		avg = sum(A)/n
+		if abs()
+
 a = Solution()
-print(a.smallestRangeI([0,10],2))
+print(a.smallestRangeI1(A = [1,3,6], K = 3))

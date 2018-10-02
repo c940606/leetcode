@@ -50,7 +50,11 @@ class Solution(object):
 
 		# print(res)
 		return max(max(max_list)*max(nums),min(min_list)*min(nums))
+
+	def maximumProduct3(self, nums):
+		nums.sort()
+		return max(nums[0]*nums[1]*nums[-1],nums[-1]*nums[-2]*nums[-3])
 a = Solution()
-print(a.maximumProduct1([1,2,3,4]))
+print(a.maximumProduct3([1,2,3,4]))
 
 

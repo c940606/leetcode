@@ -29,5 +29,31 @@ def maxArea2(height):
 	return max_wather
 
 
-print(maxArea2([1,1,2,65,454,45]))
+def maxArea3( height):
+	"""
+	:type height: List[int]
+	:rtype: int
+	"""
+	if not height:
+		return 0
+	n = len(height)
+	left = 0
+	right = n - 1
+	max_water = 0
+	# min_height = 0
+	while left < right:
+		print(left,right)
+		if height[left] <= height[right]:
+			min_height = height[left]
+			max_water = max(max_water, (right - left) * min_height)
+			left += 1
+		else:
+			min_height = height[right]
+			max_water = max(max_water, (right - left) * min_height)
+			right -= 1
+	return max_water
+
+
+# print(maxArea3([1,1,2,65,454,45]))
+print(maxArea3([1,8,6,2,5,4,8,3,7]))
 
