@@ -28,9 +28,12 @@ class Solution(object):
 		return max_num-max2_num-2*K
 
 	def smallestRangeI1(self, A, K):
-		n = len(A)
-		avg = sum(A)/n
-		if abs()
+		max_num = max(A)
+		min_num = min(A)
+		if max_num - min_num > 2*abs(K):
+			return max_num - min_num - 2*abs(K)
+		else:
+			return 0
 
 a = Solution()
 print(a.smallestRangeI1(A = [1,3,6], K = 3))

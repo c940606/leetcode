@@ -15,33 +15,32 @@ class Solution:
 		:type sum: int
 		:rtype: List[List[int]]
 		"""
-		self.sum_route = []
-		self.findSum(root,sum,[],0)
-		return self.sum_route
+		if not root:
+			return []
+		res = []
+		def helper(root,temp_sum,temp_list):
+			print(temp_sum, temp_list)
+			# if temp_sum > sum:
+			# 	return
+			if not root.right and not root.left and temp_sum+root.val == sum:
+				res.append(temp_list+[root.val])
+				return
+			if root.left:
+				helper(root.left,temp_sum+root.val,temp_list+[root.val])
+			if root.right:
+				helper(root.right,temp_sum+root.val,temp_list+[root.val])
+		helper(root,0,[])
+		return res
 
-	def findSum(self, root, sum, temp_list,temp_num):
-		# print(root.val)
-		if   not root:
-			return
-		if  not root.right and not root.left and sum == temp_num+root.val:
-			# print(root.val)
-			self.sum_route.append(temp_list+[root.val])
-			# print(self.all_sum)
-			return
-
-		else:
-			self.findSum(root.left,sum,temp_list+[root.val],temp_num+root.val)
-			self.findSum(root.right,sum, temp_list + [root.val], temp_num + root.val)
-
-treelist = [1,2,3,'#',4,5]
-treelist1 = [5,4,8,11,"#",13,4,7,2]
-treelist2 = [-2,"#",-3]
-tree_obj = creatTree()
-tree = tree_obj.list_to_tree(treelist2,TreeNode,0)
-
-
-
+t = creatTree()
+t_list = [-2,"#",-3]
+tree = t.list_to_tree(t_list,TreeNode,0)
 a = Solution()
 print(a.pathSum(tree,-5))
+
+
+
+# a = Solution()
+# print(a.pathSum(tree,-5))
 
 
