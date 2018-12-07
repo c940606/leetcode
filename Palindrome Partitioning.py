@@ -26,6 +26,21 @@ class Solution:
 			if s[0:i+1] != s[0:i+1][::-1]:
 				continue
 			self.trace(temp+[s[0:i+1]],s[i+1:])
+
+	def partition1(self, s):
+		if not s:
+			return []
+		res = []
+		n = len(s)
+		def helper(idx,temp_list):
+			if idx == n:
+				res.append(temp_list)
+
+			for i in range(idx,n):
+				if s[idx:i+1] == s[idx:i+1][::-1]:
+					helper(i+1,temp_list+[s[idx:i+1]])
+		helper(0,[])
+		return res
 a = Solution()
-print(a.partition("aab"))
+print(a.partition1("aab"))
 

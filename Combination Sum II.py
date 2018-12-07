@@ -34,9 +34,32 @@ class Solution:
 		# else:
 		# 	break
 
+	def combinationSum(self, candidates, target):
+		if not candidates:
+			return []
+		if min(candidates) > target:
+			return []
+		res = []
+		n = len(candidates)
+		candidates.sort()
+		def helper(idx, temp_list, target):
+			if target == 0:
+				res.append(temp_list)
+			if target < 0:
+				return
+			for i in range(idx, n):
+				# print(i)
+				if i > idx and candidates[i-1] == candidates[i]:
+					continue
+				if candidates[i] > target:
+					break
+				helper(i + 1, temp_list + [candidates[i]], target - candidates[i])
+		helper(0,[],target)
+		return res
+
 a = Solution()
 candidates1 = [10,1,2,7,6,1,5]
 target1 = 8
 candidates2 = [1,2]
 target2 = 4
-print(a.combinationSum2(candidates1,target1))
+print(a.combinationSum(candidates1,target1))

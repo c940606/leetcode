@@ -44,9 +44,19 @@ class Solution:
 		return results
 
 	def subsets2(self, nums):
-		 pass
+		if not nums:
+			return []
+		res = []
+		n = len(nums)
 
+		def helper(idx, temp_list):
+			res.append(temp_list)
+			for i in range(idx, n):
+				helper(i + 1, temp_list + [nums[i]])
+
+		helper(0, [])
+		return res
 
 nums = [1,2,3]
 a = Solution()
-print(a.subsets1(nums))
+print(a.subsets2(nums))

@@ -27,7 +27,27 @@ class Solution:
 			self.dft(sing_list+[nums[i]],nums[0:i]+nums[i+1:])
 
 	def permute1(self, nums):
-		return list(permutations(nums))
+		if not nums:
+			return
+		res = []
+		n = len(nums)
+		visited = [0] * n
+		def helper1(temp_list,length):
+			if length == n:
+				res.append(temp_list)
+			for i in range(n):
+				if visited[i] :
+					continue
+				visited[i] = 1
+				helper1(temp_list+[nums[i]],length+1)
+				visited[i] = 0
+		def helper2(nums,temp_list,length):
+			if length == n:
+				res.append(temp_list)
+			for i in range(len(nums)):
+				helper2(nums[:i]+nums[i+1:],temp_list+[nums[i]],length+1)
+		helper2(nums,[],0)
+		return res
 
 a = Solution()
 nums = [1,2,3]
