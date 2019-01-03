@@ -24,3 +24,44 @@ class Solution(object):
 		:type M: List[List[int]]
 		:rtype: int
 		"""
+		people = len(M)
+		res = 0
+		visited = set()
+
+		def dfs(person):
+			for idx, tmp in enumerate(M[person]):
+				if tmp and idx not in visited:
+					visited.add(idx)
+					dfs(idx)
+
+		for i in range(people):
+			if i not in visited:
+				res += 1
+				dfs(i)
+		return res
+
+	def findCircleNum1(self, M):
+		f = {}
+		n = len(M)
+		def find(x):
+			f.setdefault(x,x)
+			if x != f[x]:
+				f[x] = find(f[x])
+			return f[x]
+		def union(x,y):
+			f[find(y)] = find(x)
+
+		for i in range(n):
+			for j in range(i,n):
+				if M[i][j] == 1:
+					union(i,j)
+		print(f)
+		return len(set(map(find, f)))
+
+
+
+
+a = Solution()
+print(a.findCircleNum1([[1, 1, 0],
+					   [1, 1, 0],
+					   [0, 0, 1]]))

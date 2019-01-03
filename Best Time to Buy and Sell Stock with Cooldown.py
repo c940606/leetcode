@@ -15,3 +15,20 @@ class Solution(object):
 		:type prices: List[int]
 		:rtype: int
 		"""
+		if not prices:
+			return 0
+		n = len(prices)
+		buy = [0] * n
+		sell = [0] * n
+		buy[0] = -prices[0]
+		for i in range(1, n):
+			if i > 1:
+				buy[i] = max(buy[i-1] ,sell[i-2] - prices[i])
+				sell[i] = max(sell[i-1], buy[i-1] + prices[i])
+			else:
+				buy[i] = max(buy[i-1],-prices[i])
+				sell[i] = max(sell[i - 1], buy[i - 1] + prices[i])
+		return sell[-1]
+a = Solution()
+print(a.maxProfit([1,2,3,0,2]))
+

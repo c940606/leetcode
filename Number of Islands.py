@@ -44,5 +44,42 @@ class Solution(object):
 					helper(i,j)
 					count += 1
 		return count
+
+	def numIslands1(self, grid):
+		r = len(grid)
+		c = len(grid[0])
+
+		f = {}
+
+		def find(x):
+			f.setdefault(x, x)
+			if x != f[x]:
+				f[x] = find(f[x])
+			return f[x]
+		def union(x,y):
+			f[find(x)] = find(y)
+
+		for i in range(r):
+			for j in range(c):
+				if j > 0 and grid[i][j - 1] == "1":
+					union((i,j),(i,j-1))
+				# if j < c - 1 and grid[i][j + 1] == "1":
+				# 	union((i, j), (i, j + 1))
+				elif i > 0 and grid[i - 1][j] == "1":
+					union((i, j), (i - 1, j ))
+				# if i < r - 1 and grid[i + 1][j] == "1":
+				# 	union((i, j), (i, j - 1))
+		s = set()
+		res = 0
+		for i in range(r):
+			for j in range(c):
+				if grid[i][j] == "1" :
+					if find((i,j)) not in s:
+						s.add(find((i,j)))
+						res += 1
+		return res
+
+
+
 a = Solution()
-print(a.numIslands([["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]))
+print(a.numIslands1([["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]))
