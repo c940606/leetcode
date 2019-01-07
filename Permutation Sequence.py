@@ -21,15 +21,35 @@ class Solution:
 		"""
 		self.res = []
 		nums = [str(i+1) for i in range(n)]
-		self.dft("", nums,k,n)
+		self.dfs("", nums,k,n)
 		print(self.res)
 		return int(self.res[-1])
 
-	def dft(self, sing_list,nums,k,n):
+	def dfs(self, sing_list,nums,k,n):
 		if n == 0 :
 			self.res.append(sing_list)
 		if len(self.res) < k:
 			for i in range(len(nums)):
-				self.dft(sing_list + nums[i], nums[0:i] + nums[i + 1:],k, n - 1)
+				self.dfs(sing_list + nums[i], nums[0:i] + nums[i + 1:],k, n - 1)
+
+	def getPermutation1(self, n, k):
+		import  math
+		lookup = list(range(1, n + 1))
+		n -= 1
+		fact = math.factorial(n)
+		res = ""
+		k -= 1
+		while k:
+			idx = k // fact
+			res += str(lookup[idx])
+			lookup.pop(idx)
+			k -= idx * fact
+			fact //= n
+			n -= 1
+		for num in lookup:
+			res += str(num)
+
+		return res
+
 a = Solution()
-print(a.getPermutation(3,3))
+print(a.getPermutation1(3,3))

@@ -23,6 +23,9 @@ class Solution:
 
 			# print("---",sum)
 		return sum
+
+	def numTrees1(self, n):
+
 a = Solution()
 print(a.numTrees(5))
 

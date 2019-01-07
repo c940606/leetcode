@@ -22,3 +22,42 @@ class Solution:
 		:type n: int
 		:rtype: List[TreeNode]
 		"""
+
+		def helper(start, end):
+			res = []
+			if start > end:
+				res.append(None)
+				return res
+			if start == end:
+				res.append(TreeNode(start))
+				return res
+			for i in range(start, end + 1):
+				left = helper(start, i - 1)
+				right = helper(i + 1, end)
+				for lnode in left:
+					for rnode in right:
+						root = TreeNode(i)
+						root.left = lnode
+						root.right = rnode
+						res.append(root)
+			return res
+
+		return helper(1, n)
+
+	def generateTrees1(self, n):
+		from collections import defaultdict
+		lookup = defaultdict(list)
+
+		def helper(start, end):
+			if start > end:
+				return [None]
+			if (start, end) in lookup:
+				return lookup[(start, end)]
+			for val in range(start, end + 1):
+				for left in helper(start, val - 1):
+					for right in helper(val + 1, end):
+						root = TreeNode(val)
+						root.left, root.right = left, right
+						lookup[(start, end)].append(root)
+			return lookup[(start, end)]
+		return helper(1, n)
