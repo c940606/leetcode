@@ -148,7 +148,6 @@ class Solution(object):
 
 
 
-
 a = Solution()
 # print(a.fourSumCount1(A = [ 1, 2],B = [-2,-1],C = [-1, 2],D = [ 0, 2]))
 print(a.fourSumCount([-1,-1],[-1,1],[-1,1],[1,-1]))
