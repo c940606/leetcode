@@ -1,20 +1,29 @@
 class Solution(object):
-	def integerBreak(self, n):
-		"""
-		:type n: int
-		:rtype: int
-		"""
-		res = [0]*(n+1)
-		res[2] = 1
-		res[3] = 2
-		res[4] = 4
-		res[5] = 6
-		i = 6
-		# for i in enumerate
-		while i < n+1:
-			res[i] = max(map(lambda x:x[1]*(i-x[0]) ,enumerate(res[:i])))
-			i += 1
-		print(res)
-		return res[-1]
+    def integerBreak(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n == 2: return 1
+        if n == 3: return 2
+        lookup = {4, 3, 2}
+        res = 1
+        while n:
+            while n - 4 > 0:
+                n -= 3
+                res *= 3
+            if n in lookup:
+                res *= n
+                n -= n
+        return res
+
+    def integerBreak1(self, n):
+        dp = [1] * (n + 1)
+        for i in range(2, n + 1):
+            for j in range(1, i):
+                dp[i] = max(dp[i], max(j, dp[j]) * max(dp[i - j], i - j))
+        return dp[n]
+
+
 a = Solution()
-print(a.integerBreak(6))
+print(a.integerBreak1(13))

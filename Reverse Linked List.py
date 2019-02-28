@@ -5,7 +5,7 @@ class ListNode(object):
 		self.next = None
 
 class Solution(object):
-	def reverseList1(self, head):
+	def reverseList(self, head):
 		"""
 		思路:
 		三个指针
@@ -20,3 +20,13 @@ class Solution(object):
 			pre = cur
 			cur = nxt
 		return pre
+
+	def reverseList1(self, head):
+
+		def helper(head,new_node):
+			if head:
+				return new_node
+			tmp = head.next
+			head.next = new_node
+			return helper(tmp,head)
+		return helper(head,None)

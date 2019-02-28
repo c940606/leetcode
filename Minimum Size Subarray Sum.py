@@ -34,5 +34,34 @@ class Solution(object):
 			else:
 				i += 1
 		return 0 if min_len==n else min_len
+
+	def minSubArrayLen1(self, s, nums):
+		if not nums:
+			return 0
+		dp = [0]
+		for num in nums:
+			dp.append(dp[-1]+num)
+		# print(dp)
+		n = len(dp)
+		res = float("inf")
+		for i in range(n-1,-1,-1):
+			for j in range(i-1,-1,-1):
+				if dp[i] - dp[j] >=s:
+					res = min(res,i-j)
+					break
+		return res if res != float("inf") else 0
+
+	def minSubArrayLen2(self, s, nums):
+		cur_sum = 0
+		n = len(nums)
+		res = float("inf")
+		l = 0
+		for i in range(n):
+			cur_sum += nums[i]
+			while cur_sum >= s:
+				res = min(res,i-l+1)
+				cur_sum -= nums[l]
+				l += 1
+		return res if res != float("inf") else 0
 a = Solution()
-print(a.minSubArrayLen(s = 7, nums = [2,3,1,2,4,3]))
+print(a.minSubArrayLen2(s = 7, nums = [2,3,1,2,4,3]))

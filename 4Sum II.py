@@ -145,9 +145,22 @@ class Solution(object):
 		print(res)
 		return count
 
+	def fourSumCount2(self, A, B, C, D):
+		from collections import defaultdict
+		lookup = defaultdict(int)
+
+		for c in C:
+			for d in D:
+				lookup[c+d] += 1
+
+		res = 0
+		for a in A:
+			for b in B:
+				res += lookup[-(a+b)]
+		return res
 
 
 
 a = Solution()
 # print(a.fourSumCount1(A = [ 1, 2],B = [-2,-1],C = [-1, 2],D = [ 0, 2]))
-print(a.fourSumCount([-1,-1],[-1,1],[-1,1],[1,-1]))
+print(a.fourSumCount2([-1,-1],[-1,1],[-1,1],[1,-1]))

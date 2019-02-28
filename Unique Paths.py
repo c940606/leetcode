@@ -17,20 +17,13 @@ class Solution:
 		:type n: int
 		:rtype: int
 		"""
-		route = [[0]*m for _ in range(n)]
-		route[0][0] = 1
+		dp = [[1]*m for _ in range(n)]
 
-		for i in range(n):
-			for j in range(m):
-				if i == 0 and j ==0:
-					continue
-				if i == 0:
-					route[i][j]  = route[i][j-1]
-				elif j==0:
-					route[i][j] = route[i-1][j]
-				elif i - 1>=0 and j-1 >=0:
-					route[i][j] = route[i][j-1]+route[i-1][j]
-		return route[n-1][m-1]
+
+		for i in range(1,n):
+			for j in range(1,m):
+				dp[i][j] = dp[i-1][j] + dp[i][j-1]
+		return dp[-1][-1]
 
 	def uniquePaths1(self, m, n):
 		return int(math.factorial(m+n-2)/math.factorial(m-1)/math.factorial(n-1))

@@ -32,11 +32,28 @@ class Solution:
 			nums1[:j+1] = nums2[:j+1]
 		return nums1
 
+	def merge1(self, nums1, m, nums2, n):
+		i = 0
+		j = 0
+		base = m
+		while j < n and m > 0 and n > 0:
+			print(i,j,nums1)
+			if nums2[j] <= nums1[i]:
+				for s in range(base, i, -1):
+					nums1[s] = nums1[s - 1]
+				nums1[i] = nums2[j]
+				j += 1
+		
+				base += 1
+				print(nums1)
+			else:
+				i += 1
+
 nums1 = [1,2,3,0,0,0]
 m = 3
-nums2 = [2,5,6]
+nums2 = [1,5,6]
 n = 3
 		# 输出: [1,2,2,3,5,6]
 a = Solution()
-# print(a.merge(nums1,m,nums2,n))
-print(a.merge([0],0,[1],1))
+print(a.merge1(nums1,m,nums2,n))
+# print(a.merge1([0],0,[1],1))

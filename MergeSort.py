@@ -1,22 +1,12 @@
 #https://blog.csdn.net/chibangyuxun/article/details/53012537
 # 归并排序
 def MergeSort(lists):
-	# print("start")
 	if len(lists) <= 1:
 		return lists
 	mid = len(lists)//2
-	# 递归
-	res = []
 	listA = MergeSort(lists[:mid])
 	listB = MergeSort(lists[mid:])
-	# print("============listA========")
-	print("listA",listA)
-	# print("============listB==========")
-	print("listB",listB)
-
 	res = MergeSortedLists(listA,listB)
-	print("res:",res)
-	print("==========")
 	return res
 def MergeSortedLists(listA,listB):
 	newList = []
