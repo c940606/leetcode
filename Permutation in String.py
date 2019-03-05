@@ -48,6 +48,26 @@ class Solution(object):
         # print(lookup)
         return True if s1 == lookup else False
 
+    def checkInclusion2(self, s1, s2):
+        from collections import Counter
+        n1 = len(s1)
+        n2 = len(s2)
+        if n2 < n1:
+            return False
+        s1 = Counter(s1)
+        i = 0
+        j = n1
+        s3 = Counter(s2[i:j])
+        while j < n2:
+            print(s3)
+            if s3 == s1:
+                return True
+            s3[s2[i]] -= 1
+            i += 1
+            s3[s2[j]] += 1
+            j += 1
+        return False
+
 
 a = Solution()
 print(a.checkInclusion1(s1="ab", s2="eidboaoo"))

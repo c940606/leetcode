@@ -79,7 +79,51 @@ class Solution(object):
 						res += 1
 		return res
 
+	def numIslands2(self, grid):
+		row = len(grid)
+		col = len(grid[0])
+		self.res = 0
+		for i in range(row):
+			for j in range(col):
+				if grid[i][j] == "1":
+					self.res += 1
+		f = {}
+		def find(x):
+			f.setdefault(x,x)
+			while x != f[x]:
+				x = f[x]
+			return f[x]
+		def union(i,j):
+			findi = find(i)
+			findj = find(j)
+			if findi != findj:
+				f[findi] = findj
+				self.res -= 1
+		for i in range(row):
+			for j in range(col):
+				p = i * col + j
+				if grid[i][j] == "1":
+					print(i,j)
+					if i > 0 and grid[i-1][j] == "1":
+						q = p - col
+						union(p,q)
+					if i < row-1 and grid[i+1][j] == "1":
+						q = p + col
+						union(p,q)
+					if j > 0  and grid[i][j-1] == "1":
+						q = p - 1
+						union(p,q)
+					if j < col - 1 and grid[i][j+1] == "1":
+						q = p + 1
+						union(p,q)
+		return self.res
+
+
+
+
+
 
 
 a = Solution()
-print(a.numIslands1([["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]))
+print(a.numIslands2([["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]))
+print(a.numIslands2([["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]))
