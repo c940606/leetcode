@@ -44,6 +44,24 @@ class Solution:
 
 			self.dps(temp+s[0:i+1]+".",s[i+1:],n-1)
 			# temp += "."
+
+	def restoreIpAddresses1(self, s):
+		res = []
+		def helper(s,tmp,k):
+			if not s and k == 0:
+				res.append(".".join(tmp))
+				return
+
+			for i in range(len(s)):
+				if (len(s[:i + 1]) > 1 and s[0] == "0") or len(s)  > k*3:
+					break
+				if 0<=int(s[:i+1])<=255:
+					helper(s[i+1:],tmp+[s[:i+1]],k-1)
+				else:
+					break
+		helper(s,[],4)
+		return res
 a = Solution()
 #"010010"
-print(a.restoreIpAddresses("010010"))
+print(a.restoreIpAddresses1("010010"))
+print(a.restoreIpAddresses1("25525511135"))
