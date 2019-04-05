@@ -15,16 +15,14 @@ def adjust_heap(array, i, n):
 def build_heap(array, n):
     for i in range(n // 2, -1, -1):
         adjust_heap(array, i, n)
-    print(array)
-
-
+    # print(array)
 def heap_sort(array):
     n = len(array)
     build_heap(array, n)
     for i in range(n - 1, -1, -1):
         array[i], array[0] = array[0], array[i]
         adjust_heap(array, 0, i)
-        print(array)
+        # print(array)
     return array
 
 

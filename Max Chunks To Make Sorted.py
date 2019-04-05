@@ -60,9 +60,44 @@ class Solution(object):
 			if maxn == i:
 				count +=1
 		return count
+	def maxChunksToSorted2(self,arr):
+		n = len(arr)
+		right = 0
+		left = 0
+		res = 0
+		while right < n:
+			right = arr[left]
+			while left < n and left < right:
+				left += 1
+				right = max(arr[left],right)
+			res += 1
+			right += 1
+			left = right
+		return res
+
+	def maxChunksToSorted3(self, arr):
+		from collections import Counter
+		res = 0
+		n = len(arr)
+		arr_copy = arr[:]
+		arr_copy.sort()
+		arr_copy_dict = Counter()
+		arr_dict = Counter()
+		for i in range(n):
+			arr_copy_dict[arr_copy[i]] += 1
+			arr_dict[arr[i]] += 1
+			if arr_copy_dict == arr_dict:
+				res += 1
+				arr_copy_dict.clear()
+				arr_dict.clear()
+		return res
+
+
+
 
 a = Solution()
-print(a.maxChunksToSorted([1,0,2,3,4]))
+print(a.maxChunksToSorted1([1,0,2,3,4]))
 print(a.maxChunksToSorted1([4,3,2,1,0]))
+print(a.maxChunksToSorted1([1,4,3,6,0,7,8,2,5]))
 
 

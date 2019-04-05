@@ -1,6 +1,6 @@
 def merge_sort(array):
     n = len(array)
-    if n <=1:
+    if n <= 1:
         return array
     mid = n // 2
     left = merge_sort(array[:mid])
@@ -22,5 +22,7 @@ def merge(left, right):
     res += left[i:]
     res += right[j:]
     return res
-lists = [3,5,4,2,1,6]
+
+
+lists = [3, 5, 4, 2, 1, 6]
 print(merge_sort(lists))
