@@ -27,8 +27,13 @@ class Solution:
 
         def find(x):
             f.setdefault(x, x)
-            while f[x] != x:
-                x = f[x]
+            p = x
+            while f[p] != p:
+                p = f[p]
+            while x != p:
+                t = f[x]
+                f[x] = p
+                x = t
             return x
 
         def union(x, y):
@@ -94,7 +99,7 @@ class Solution:
         return res
 
     def accountsMerge3(self, accounts):
-        from collections import defaultdict, deque
+        from collections import defaultdict
         graph = defaultdict(set)
         email_to_name = defaultdict()
         for account in accounts:
@@ -107,12 +112,14 @@ class Solution:
         # print(graph)
         visited = set()
         res = []
+
         def dfs(e):
             new_list.append(e)
             for t in graph[e]:
                 if t not in visited:
                     visited.add(t)
                     dfs(t)
+
         for e in graph:
             if e not in visited:
                 visited.add(e)
@@ -122,9 +129,8 @@ class Solution:
         return res
 
 
-
 a = Solution()
-print(a.accountsMerge3(accounts=[["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"],
+print(a.accountsMerge1(accounts=[["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"],
                                  ["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["Mary", "mary@mail.com"]]))
 print(a.accountsMerge3(
     [["David", "David0@m.co", "David1@m.co"], ["David", "David3@m.co", "David4@m.co"],

@@ -5,7 +5,6 @@ class Node(object):
 
 
 class MyLinkedList(object):
-
     def __init__(self):
         """
         Initialize your data structure here.
@@ -70,7 +69,7 @@ class MyLinkedList(object):
             self.addAtTail(val)
         else:
             cur = self.head
-            for _ in range(index-1):
+            for _ in range(index - 1):
                 cur = cur.next
             node = Node(val)
             node.next = cur.next
@@ -83,15 +82,16 @@ class MyLinkedList(object):
         :type index: int
         :rtype: void
         """
-        if 0<=index < self.size:
+        if 0 <= index < self.size:
             cur = self.head
             if index == 0:
-                self.head =  cur.next
+                self.head = cur.next
             else:
-                for i in range(index-1):
+                for i in range(index - 1):
                     cur = cur.next
                 cur.next = cur.next.next
             self.size -= 1
+
 
 # Your MyLinkedList object will be instantiated and called as such:
 # obj = MyLinkedList()
