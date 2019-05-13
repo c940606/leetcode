@@ -4,7 +4,9 @@ class Solution:
         res = 0
 
         for i in range(len(height)):
+            print(stack)
             while stack and height[stack[-1]] < height[i]:
+
                 cur = stack.pop()
                 if not stack: break
                 res += (min(height[stack[-1]], height[i]) - height[cur]) * (i - stack[-1] - 1)
@@ -28,5 +30,5 @@ class Solution:
 
 
 a = Solution()
-print(a.trap1([0, 1, 0, 2]))
-print(a.trap1([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
+# print(a.trap1([0, 1, 0, 2]))
+print(a.trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]))
