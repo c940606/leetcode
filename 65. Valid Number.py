@@ -1,110 +1,79 @@
 class Solution:
-    def isNumber(self, s: str) -> bool:
-        if not s:
-            return False
-        s = s.split("e")
-        n = len(s)
-
-        def helper(t):
-            n = len(t)
-            i = 0
-            while i < n and t[i] == " ":
-                i += 1
-            if i == n:
-                return False
-            if i < n and t[i] in ["+", "-"]:
-                i += 1
-            if i == n:
-                return False
-            while i < n:
-                if t[i] == " ":
-                    i += 1
-                    continue
-                elif not t[i].isdigit():
+    def isNumber(self, s: str):
+        s = s.strip()
+        print(s)
+        dot_seen = False
+        e_seen = False
+        num_seen = False
+        for i, a in enumerate(s):
+            if a.isdigit():
+                num_seen = True
+            elif a == ".":
+                if e_seen or dot_seen:
                     return False
-                i += 1
-            return True
-
-        print(s, len(s))
-        if n == 1:
-            num1 = s[0]
-            num1 = str(num1).strip()
-            # print(num1,len(num1))
-            if " " in num1:
-                return False
-
-            if num1.count(".") > 1:
-                return False
-            if "." in num1:
-                tmp1, tmp2 = num1.split(".")
-                if tmp2 and tmp2[0] in ["+", "-"]:
+                dot_seen = True
+            elif a == "e":
+                if e_seen or not num_seen:
                     return False
-                if tmp1 in ["+","-"] and helper(tmp2):
-                    return True
-                if tmp1 and tmp1[-1] == " ":
-                    return False
-                tmp1.strip(" ")
-                tmp2.strip(" ")
-                # print(bool(tmp1),bool(tmp2))
-                if not tmp1 and not tmp2:
-                    return False
-                if not tmp1 and helper(tmp2):
-                    return True
-                if not tmp2 and helper(tmp1):
-                    return True
-                # if len(set(tmp1)) == 1 and tmp1[0]
-                if not helper(tmp1) or not helper(tmp2):
+                num_seen = False
+                e_seen = True
+            elif a in "+-":
+                if i > 0 and s[i - 1] != "e":
                     return False
             else:
-                if not helper(num1):
-                    return False
-
-        elif n == 2:
-            num1 = s[0]
-            num2 = s[1]
-            if not num1 or not num2:
                 return False
-            if "." in num2 or not helper(num2):
-                return False
-            if num1.count(".") > 1:
-                return False
-            if "." in num1:
-                tmp1, tmp2 = num1.split(".")
-                if tmp2 and tmp2[0] in ["+", "-"]:
-                    return False
-                if tmp1[-1] == " " or tmp2[0] == " ":
-                    return False
-                if tmp1 in ["+","-"] and helper(tmp2):
-                    return True
-                tmp1.strip(" ")
-                tmp2.strip(" ")
-                # print(bool(tmp1),bool(tmp2))
-                if not tmp1 and not tmp2:
-                    return False
-                if not tmp1 and helper(tmp2):
-                    return True
-                if not tmp2 and helper(tmp1):
-                    return True
-                if not helper(tmp1) or not helper(tmp2):
-                    return False
-            else:
-                if not helper(num1):
-                    # print("df")
-                    return False
+        return num_seen
 
-        else:
-
+    def isNumber1(self, s: str):
+        state = [
+            {},
+            # 状态1,初始状态(扫描通过的空格)
+            {"blank": 1, "sign": 2, "digit": 3, ".": 4},
+            # 状态2,发现符号位(后面跟数字或者小数点)
+            {"digit": 3, ".": 4},
+            # 状态3,数字(一直循环到非数字)
+            {"digit": 3, ".": 5, "e": 6, "blank": 9},
+            # 状态4,小数点(后面只有紧接数字)
+            {"digit": 5},
+            # 状态5,小数点之后(后面只能为数字,e,或者以空格结束)
+            {"digit": 5, "e": 6, "blank": 9},
+            # 状态6,发现e(后面只能符号位, 和数字)
+            {"sign": 7, "digit": 8},
+            # 状态7,e之后(只能为数字)
+            {"digit": 8},
+            # 状态8,e之后的数字后面(只能为数字或者以空格结束)
+            {"digit": 8, "blank": 9},
+            # 状态9, 终止状态 (如果发现非空,就失败)
+            {"blank": 9}
+        ]
+        cur_state = 1
+        for c in s:
+            if c.isdigit():
+                c = "digit"
+            elif c in " ":
+                c = "blank"
+            elif c in "+-":
+                c = "sign"
+            if c not in state[cur_state]:
+                return False
+            cur_state = state[cur_state][c]
+        if cur_state not in [3, 5, 8, 9]:
             return False
         return True
 
+    def isNumber2(self, s: str):
+        import re
+        return re.compile("[-+]?(\\d+\\.?|\\.\\d+)\\d*(e[-+]?\\d+)?").match(s.strip())
+        #return re.match("[-+]?(\\d+\\.?|\\.\\d+)\\d*(e[-+]?\\d+)?", s.strip())
+
 
 a = Solution()
-# print(a.isNumber(" 6 e-1"))
+print(a.isNumber2(" 6 e-1"))
 # print(a.isNumber("-+3"))
 # print(a.isNumber(" 0.1 "))
 # print(a.isNumber(" -90e3   "))
 # print(a.isNumber("53.5e93"))
-# print(a.isNumber("95a54e53" ))
+# print(a.isNumber("95a54e53"))
 # print(a.isNumber(".."))
 # print(a.isNumber("e"))
 # print(a.isNumber("."))
@@ -114,4 +83,4 @@ a = Solution()
 # print(a.isNumber("1 "))
 # print(a.isNumber(".-4"))
 # print(a.isNumber("+.8"))
-print(a.isNumber(".e1"))
+# print(a.isNumber(".e1"))

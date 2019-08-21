@@ -1,5 +1,5 @@
 class Solution(object):
-    def findWords(self, board, words):
+    def findWords1(self, board, words):
         """
         :type board: List[List[str]]
         :type words: List[str]
@@ -39,6 +39,35 @@ class Solution(object):
 
         return res
 
+    def findWords(self, board, words):
+        trie = {}
+        for word in words:
+            t = trie
+            for w in word:
+                t = t.setdefault(w, {})
+            t["end"] = 1
+        res = []
+        row = len(board)
+        col = len(board[0])
+        def dfs(i, j, trie, s):
+            c = board[i][j]
+            if c not in trie: return
+            trie = trie[c]
+            s += c
+            if "end" in trie and trie["end"] == 1:
+                res.append(s)
+                trie["end"] = 0
+            board[i][j] = "#"
+            for x, y in [[-1, 0], [1, 0], [0, 1], [0, -1]]:
+                tmp_i = x + i
+                tmp_j = y + j
+                if 0 <= tmp_i < row and 0 <= tmp_j < col and board[tmp_i][tmp_j] != "#":
+                    dfs(tmp_i, tmp_j, trie, s)
+            board[i][j] = c
+        for i in range(row):
+            for j in range(col):
+                dfs(i, j, trie, "")
+        return res
 
 a = Solution()
 print(a.findWords(words=["oath", "pea", "eat", "rain"], board=

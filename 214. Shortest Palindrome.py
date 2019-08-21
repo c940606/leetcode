@@ -18,7 +18,7 @@ class Solution:
         max_len = 0
         even_max_loc = None
         odd_max_loc = None
-        for idx, alp in enumerate(s[:n // 2+1 ]):
+        for idx, alp in enumerate(s[:n // 2 + 1]):
             if idx >= 1 and s[idx] == s[idx - 1]:
                 t = helper(s[:idx - 1], s[idx + 1:])
                 if t >= max_len:
@@ -41,11 +41,43 @@ class Solution:
             return s[even_max_loc + 1:][::-1] + s[even_max_loc] * 2 + s[even_max_loc + 1:]
         return s[1:][::-1] + s[0] + s[1:]
 
+    def shortestPalindrome1(self, s: str) -> str:
+        n = len(s)
+        i = n // 2
+        while i >= 0:
+            # 奇
+            tmp1 = s[:i]
+            tmp2 = s[i + 1:]
+            # print(tmp1,tmp2)
+            if tmp2.find(tmp1[::-1]) == 0:
+                return s[i + 1:][::-1] + s[i] + s[i + 1:]
+            # 偶
+            if i > 0 and s[i - 1] == s[i]:
+                tmp1 = s[:i - 1]
+                tmp2 = s[i + 1:]
+                if tmp2.find(tmp1[::-1]) == 0:
+                    return s[i + 1:][::-1] + s[i] + s[i] + s[i + 1:]
+            i -= 1
+
+    def shortestPalindrome(self, s: str) -> str:
+        n = len(s)
+        if n <= 1: return s
+        def helper(i, j):
+            return s[j:].startswith(s[:i + 1][::-1])
+
+        for i in range((n - 1) // 2, -1, -1):
+            # 偶数
+            if s[i] == s[i + 1] and helper(i, i + 1):
+                return s[i + 1:][::-1] + s[i + 1:]
+            if helper(i, i):
+                # print(i)
+                return s[i + 1:][::-1] + s[i:]
+
+
 
 a = Solution()
-# print(a.shortestPalindrome("aacecaaa"))
-# print(a.shortestPalindrome("abcd"))
-# print(a.shortestPalindrome("ab"))
+print(a.shortestPalindrome("aacecaaa"))
+print(a.shortestPalindrome("abcd"))
+print(a.shortestPalindrome("ab"))
 print(a.shortestPalindrome("aba"))
 print(a.shortestPalindrome("aabba"))
-

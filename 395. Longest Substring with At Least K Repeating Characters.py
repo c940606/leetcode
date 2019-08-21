@@ -2,7 +2,7 @@ from collections import Counter
 
 
 class Solution:
-    def longestSubstring(self, s: str, k: int) -> int:
+    def longestSubstring2(self, s: str, k: int) -> int:
         from collections import Counter
         if not s:
             return 0
@@ -72,6 +72,8 @@ class Solution:
             return res
 
         return max(helper(s, k, i) for i in range(1, 27))
+
+    def longestSubstring(self, s: str, k: int) -> int:
 
 
 a = Solution()

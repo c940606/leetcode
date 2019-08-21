@@ -26,4 +26,4 @@ class Solution:
             in_order(root.right)
 
         in_order(root)
-        firstNode.val, secondNode.val = secondNode.val, firstNode.val
+        self.firstNode.val, self.secondNode.val = self.secondNode.val, self.firstNode.val

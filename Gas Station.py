@@ -1,5 +1,5 @@
 class Solution(object):
-    def canCompleteCircuit(self, gas, cost):
+    def canCompleteCircuit1(self, gas, cost):
         """
 		在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
 		你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
@@ -71,7 +71,7 @@ class Solution(object):
                 idx += 1
         return False
 
-    def canCompleteCircuit2(self, gas, cost):
+    def canCompleteCircuit5(self, gas, cost):
         tank = 0
         start = 0
         total = 0
@@ -83,6 +83,35 @@ class Solution(object):
                 total += tank
                 tank = 0
         return False if total + tank < 0 else start
+
+    def canCompleteCircuit6(self, gas, cost):
+        n = len(gas)
+
+        for i in range(n):
+            tank = 0
+            loc = i
+            while 1:
+                tank += gas[loc % n]
+                if tank < cost[loc % n]:
+                    break
+                tank -= cost[loc % n]
+                if (loc + 1) % n == i:
+                    return i
+                loc += 1
+        return -1
+
+    def canCompleteCircuit(self, gas, cost):
+        res = -1
+        if sum(gas) < sum(cost):return res
+        tank = 0
+        for i, item in enumerate(zip(gas, cost)):
+            #print(i, g)
+            tank += (item[0] - item[1])
+            if tank < 0:
+                res = i + 1
+                tank = 0
+        return res
+
 
 a = Solution()
 gas = [1, 2, 3, 4, 5]
@@ -1179,6 +1208,6 @@ cost2 = [3311, 3312, 3313, 3314, 3315, 3316, 3317, 3318, 3319, 3320, 3321, 3322,
          3268, 3269, 3270, 3271, 3272, 3273, 3274, 3275, 3276, 3277, 3278, 3279, 3280, 3281, 3282, 3283, 3284, 3285,
          3286, 3287, 3288, 3289, 3290, 3291, 3292, 3293, 3294, 3295, 3296, 3297, 3298, 3299, 3300, 3301, 3302, 3303,
          3304, 3305, 3306, 3307, 3308, 3309, 3310]
-print(a.canCompleteCircuit2(gas2, cost2))
+print(a.canCompleteCircuit(gas, cost))
 
 # print(sum(gas2),sum(cost2))

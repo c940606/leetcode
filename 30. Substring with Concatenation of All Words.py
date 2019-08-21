@@ -1,5 +1,5 @@
 class Solution:
-    def findSubstring(self, s: str, words):
+    def findSubstring2(self, s: str, words):
         from  collections import Counter
         if not s or not words:
             return []
@@ -43,6 +43,8 @@ class Solution:
             if t == c:
                 res.append(i)
         return res
+
+    def findSubstring(self, s: str, words):
 
 
 if __name__ == '__main__':
