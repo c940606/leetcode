@@ -1,5 +1,5 @@
 class Solution:
-    def hIndex(self, citations) -> int:
+    def hIndex1(self, citations) -> int:
         if not citations:
             return 0
         n = len(citations)
@@ -19,7 +19,14 @@ class Solution:
             idx -= 1
         return 0
 
-
+    def hIndex(self, citations) -> int:
+        citations.sort(reverse=True)
+        #n = len(citations)
+        #print(citations)
+        for i, citation in enumerate(citations):
+            if citation <= i:
+                return i
+        return len(citations)
 
 
 a = Solution()

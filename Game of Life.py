@@ -1,6 +1,6 @@
 import copy
 class Solution(object):
-	def gameOfLife(self, board):
+	def gameOfLife1(self, board):
 		"""
 		根据百度百科，生命游戏，简称为生命，是英国数学家约翰·何顿·康威在1970年发明的细胞自动机。
 		给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。每个细胞具有一个初始状态 live（1）即为活细胞， 或 dead（0）即为死细胞。每个细胞与其八个相邻位置（水平，垂直，对角线）的细胞都遵循以下四条生存定律：
@@ -63,6 +63,15 @@ class Solution(object):
 		if i + 1 < self.row and j + 1 < self.col and self.flag[i + 1][j + 1] == 1:
 			count_live += 1
 		return count_live
+
+	def gameOfLife(self, board):
+		"""
+		:param board:
+		:return:
+		"""
+
+
+
 a = Solution()
 print(a.gameOfLife([
   [0,1,0],

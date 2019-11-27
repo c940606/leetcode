@@ -51,12 +51,12 @@ class Solution:
             j += 2
         return res
 
-    def calculate(self, s):
+    def calculate2(self, s):
         s = s.strip()
         stack = []
         i = 0
         while i < len(s):
-            #print(i)
+            # print(i)
             if s[i].isdigit():
                 tmp = ""
                 while i < len(s) and s[i].isdigit():
@@ -89,8 +89,33 @@ class Solution:
             elif t == "-":
                 op = -1
             else:
-                res += op*t
+                res += op * t
         return res
+
+    def calculate(self, s):
+        s += "+0"
+        stack = []
+        num = 0
+        # 记录前一个符号
+        sign = "+"
+        for c in s:
+            if c.isdigit():
+                num = num * 10 + int(c)
+            elif c in {"+", "-", "*", "/"}:
+                # print(sign, num)
+                if sign == "+":
+                    stack.append(num)
+                elif sign == "-":
+                    stack.append(-num)
+                elif sign == "*":
+                    stack[-1] = stack[-1] * num
+                elif sign == "/":
+                    if stack[-1] < 0:
+                        stack[-1] = -(-stack[-1] // num)
+                    else:
+                        stack[-1] = stack[-1] // num
+                sign, num = c, 0
+        return sum(stack)
 
 
 a = Solution()

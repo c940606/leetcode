@@ -1,5 +1,5 @@
 class Solution:
-    def shortestPalindrome(self, s: str) -> str:
+    def shortestPalindrome2(self, s: str) -> str:
         if not s:
             return ""
 
@@ -59,25 +59,40 @@ class Solution:
                     return s[i + 1:][::-1] + s[i] + s[i] + s[i + 1:]
             i -= 1
 
+    def shortestPalindrome3(self, s: str) -> str:
+        def get_table(p):
+            table = [0] * len(p)
+            i = 1
+            j = 0
+            while i < len(p):
+                if p[i] == p[j]:
+                    j += 1
+                    table[i] = j
+                    i += 1
+                else:
+                    if j > 0:
+                        j = table[j - 1]
+                    else:
+                        i += 1
+                        j = 0
+            return table
+        print(get_table(s))
+        table = get_table(s + "#" + s[::-1])
+        print(table)
+        return s[table[-1]:][::-1] + s
+
     def shortestPalindrome(self, s: str) -> str:
-        n = len(s)
-        if n <= 1: return s
-        def helper(i, j):
-            return s[j:].startswith(s[:i + 1][::-1])
-
-        for i in range((n - 1) // 2, -1, -1):
-            # 偶数
-            if s[i] == s[i + 1] and helper(i, i + 1):
-                return s[i + 1:][::-1] + s[i + 1:]
-            if helper(i, i):
-                # print(i)
-                return s[i + 1:][::-1] + s[i:]
-
+        j = 0
+        for i in range(len(s) - 1, -1, -1):
+            if s[i] == s[j]: j += 1
+        if j == len(s): return s
+        suffix = s[j:]
+        return suffix[::-1] + self.shortestPalindrome(s[0:j]) + suffix
 
 
 a = Solution()
-print(a.shortestPalindrome("aacecaaa"))
-print(a.shortestPalindrome("abcd"))
-print(a.shortestPalindrome("ab"))
-print(a.shortestPalindrome("aba"))
-print(a.shortestPalindrome("aabba"))
+# print(a.shortestPalindrome("aacecaaa"))
+# print(a.shortestPalindrome("abcd"))
+# print(a.shortestPalindrome3("ab"))
+print(a.shortestPalindrome3("aba"))
+# print(a.shortestPalindrome("aabba"))

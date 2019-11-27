@@ -1,5 +1,6 @@
+from pprint import  pprint
 class Solution(object):
-    def longestPalindromeSubseq(self, s):
+    def longestPalindromeSubseq5(self, s):
         """
         给定一个字符串s，找到其中最长的回文子序列。可以假设s的最大长度为1000。
         --
@@ -18,7 +19,7 @@ class Solution(object):
                     dp[i][j] = dp[i + 1][j - 1] + 2
                 else:
                     dp[i][j] = max(dp[i][j - 1], dp[i + 1][j])
-        #print(dp)
+        # print(dp)
         return dp[0][n - 1]
 
     def longestPalindromeSubseq1(self, s):
@@ -76,7 +77,29 @@ class Solution(object):
                     dp[i][j] = max(dp[i][j + 1], dp[i - 1][j])
         return dp[n - 1][0]
 
+    def longestPalindromeSubseq(self, s):
+        dp = [[0 for i in range(len(s))] for j in range(len(s))]
+        #pprint(dp)
+        l = len(s)
+        k = 0
+        while k != len(s):
+            for i in range(l):
+                x = i
+                y = x + k
+                if k == 0:
+                    dp[x][y] = 1
+                else:
+                    if s[x] == s[y]:
+                        dp[x][y] = 2 + dp[x + 1][y - 1]
+                    else:
+                        dp[x][y] = max(dp[x][y - 1], dp[x + 1][y])
+            l -= 1
+            k += 1
+            #pprint(dp)
+        return dp[0][-1]
+
 
 a = Solution()
-print(a.longestPalindromeSubseq4("bbbab"))
-print(a.longestPalindromeSubseq2("cbbd"))
+print(a.longestPalindromeSubseq("bbbab"))
+print(a.longestPalindromeSubseq1("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"))
+# print(a.longestPalindromeSubseq2("cbbd"))

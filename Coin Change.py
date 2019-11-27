@@ -187,6 +187,7 @@ class Solution(object):
 
         for i in range(n):
             dfs(i, amount, 0)
+
         return self.res if self.res != float("inf") else -1
 
 

@@ -46,3 +46,21 @@ class Solution(object):
 			return 2 **leftheight - 1
 		else:
 			return 1 + self.countNodes2(root.left) + self.countNodes2(root.right)
+
+	def countNodes(self, root):
+		if not root: return 0
+		left_height = 0
+		left_node = root
+		right_height = 0
+		right_node = root
+		while left_node:
+			left_node = left_node.left
+			left_height += 1
+		while right_node:
+			right_node = right_node.right
+			right_height += 1
+		if left_height == right_height:
+			return pow(2,left_height) - 1
+		return 1 + self.countNodes(root.left) + self.countNodes(root.right)
+
+

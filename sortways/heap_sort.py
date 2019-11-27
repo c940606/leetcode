@@ -1,21 +1,22 @@
+# 调整堆 log_2 (n)
 def adjust_heap(array, i, n):
     lchild = 2 * i + 1
     rchild = 2 * i + 2
     max_loc = i
-    if i < n // 2:
-        if lchild < n and array[lchild] > array[max_loc]:
-            max_loc = lchild
-        if rchild < n and array[rchild] > array[max_loc]:
-            max_loc = rchild
-        if max_loc != i:
-            array[max_loc], array[i] = array[i], array[max_loc]
-            adjust_heap(array, max_loc, n)
+    if lchild < n and array[lchild] > array[max_loc]:
+        max_loc = lchild
+    if rchild < n and array[rchild] > array[max_loc]:
+        max_loc = rchild
+    if max_loc != i:
+        array[max_loc], array[i] = array[i], array[max_loc]
+        adjust_heap(array, max_loc, n)
 
-
+# 建堆 O(n)
 def build_heap(array, n):
-    for i in range(n // 2, -1, -1):
+    for i in range(n // 2 - 1, -1, -1):
         adjust_heap(array, i, n)
     # print(array)
+# 堆排序
 def heap_sort(array):
     n = len(array)
     build_heap(array, n)

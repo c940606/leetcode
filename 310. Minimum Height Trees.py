@@ -1,5 +1,5 @@
 class Solution:
-    def findMinHeightTrees(self, n, edges):
+    def findMinHeightTrees2(self, n, edges):
         """
         :type n: int
         :type edges: List[List[int]]
@@ -18,7 +18,7 @@ class Solution:
             for j in graph[i]:
                 if j not in visited:
                     helper(j, visited | {j}, depth + 1)
-                    lookup[j] = max(lookup[j], depth)
+                    # lookup[j] = max(lookup[j], depth)
             lookup[i] = max(lookup[i], depth)
 
         leaves = [i for i in graph if len(graph[i]) == 1]
@@ -31,8 +31,6 @@ class Solution:
 
     def findMinHeightTrees1(self, n, edges):
         from collections import defaultdict
-        if not edges:
-            return [0]
         graph = defaultdict(list)
         if not edges: return [0]
         for x, y in edges:
@@ -51,9 +49,34 @@ class Solution:
             leaves = nxt
         return list(leaves)
 
+    def findMinHeightTrees(self, n, edges):
+        from collections import defaultdict
+        if not edges: return [0]
+        graph = defaultdict(list)
+        # 记录每个节点最高的高度
+        lookup = [0] * n
+        for x, y in edges:
+            graph[x].append(y)
+            graph[y].append(x)
+
+        # print(graph)
+        def dfs(i, visited, depth):
+            lookup[i] = max(lookup[i], depth)
+            for j in graph[i]:
+                if j not in visited:
+                    dfs(j, visited | {j}, depth + 1)
+
+        leaves = [i for i in graph if len(graph[i]) == 1]
+        for i in leaves:
+            dfs(i, {i}, 1)
+        min_num = min(lookup)
+        return [i for i in range(n) if lookup[i] == min_num]
+
 
 a = Solution()
-print(a.findMinHeightTrees1(n=4, edges=[[1, 0], [1, 2], [1, 3]]))
+print(a.findMinHeightTrees(3, [[0, 1], [0, 2]]))
+print(a.findMinHeightTrees(7, [[0, 1], [1, 2], [1, 3], [2, 4], [3, 5], [4, 6]]))
+print(a.findMinHeightTrees(n=4, edges=[[1, 0], [1, 2], [1, 3]]))
 print(a.findMinHeightTrees(n=6, edges=[[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]))
 print(a.findMinHeightTrees(1717,
                            [[0, 1], [1, 2], [2, 3], [0, 4], [1, 5], [0, 6], [5, 7], [1, 8], [3, 9], [6, 10], [4, 11],

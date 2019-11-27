@@ -1,4 +1,3 @@
-# https://www.cnblogs.com/xzxl/p/7226557.html
 class UnionFind():
     def __init__(self):
         self.father = {}

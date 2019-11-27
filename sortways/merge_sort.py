@@ -24,5 +24,24 @@ def merge(left, right):
     return res
 
 
+def mergeSort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = mergeSort(arr[:mid])
+    right = mergeSort(arr[mid:])
+    i = 0
+    j = 0
+    # print(left, right)
+    while i < len(left) or j < len(right):
+        if j == len(right) or i < len(left) and left[i] <= right[j]:
+            arr[i + j] = left[i]
+            i += 1
+        else:
+            arr[i + j] = right[j]
+            j += 1
+    return arr
+
 lists = [3, 5, 4, 2, 1, 6]
-print(merge_sort(lists))
+# print(merge_sort(lists))
+print(mergeSort(lists))
