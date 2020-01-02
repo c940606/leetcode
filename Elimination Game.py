@@ -1,5 +1,5 @@
 class Solution(object):
-    def lastRemaining(self, n):
+    def lastRemaining4(self, n):
         """
         给定一个从1 到 n 排序的整数列表。
         首先，从左到右，从第一个数字开始，每隔一个数字进行删除，直到列表的末尾。
@@ -39,7 +39,7 @@ class Solution(object):
     def lastRemaining2(self, n):
         from collections import deque
         res = deque((range(1, n + 1)))
-        #print(res)
+        # print(res)
         flag = 1
         while len(res) != 1:
             tmp = deque()
@@ -66,8 +66,44 @@ class Solution(object):
             step *= 2
         return head
 
+    def lastRemaining6(self, n: int) -> int:
+
+        arr = list(range(1, n + 1))
+        flag = True
+
+        while len(arr) > 1:
+            # print(arr)
+            next_arr = []
+            if flag:
+                for i in range(1, len(arr), 2):
+                    next_arr.append(arr[i])
+            else:
+                for i in range(len(arr) - 2, -1, -2):
+                    next_arr.insert(0, arr[i])
+            flag = not flag
+            arr = next_arr
+        return arr[0]
+
+    def lastRemaining(self, n: int) -> int:
+        remain = n
+        flag = True
+        res = 1
+        step = 1
+        while remain > 1:
+            if flag or remain % 2 == 1:
+                res += step
+            flag = not flag
+            step *= 2
+            remain //= 2
+        return res
+
 
 a = Solution()
-print(a.lastRemaining3(100000000))
-print(a.lastRemaining3(9))
-print(a.lastRemaining3(100))
+# print(a.lastRemaining(9))
+# print(a.lastRemaining6(1))
+# print(a.lastRemaining6(6))
+# print(a.lastRemaining(100000000))
+# print(a.lastRemaining6(9))
+# print(a.lastRemaining6(100))
+for i in range(1, 100):
+    print(i, a.lastRemaining(i))

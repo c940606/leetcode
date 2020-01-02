@@ -3,7 +3,8 @@ import sys
 
 if __name__ == '__main__':
     #words = ["wrt", "wrf", "er", "ett", "rftt"]
-    words = ["cd", "bd", "d"]
+    # words = ["cd", "bd", "d"]
+    words = ["zy","zx"]
     # 建图
     graph = defaultdict(list)
     indegree = defaultdict(int)

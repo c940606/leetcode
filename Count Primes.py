@@ -65,4 +65,4 @@ class Solution(object):
 
 
 a = Solution()
-print(a.countPrimes5(100))
+print(a.countPrimes(100))

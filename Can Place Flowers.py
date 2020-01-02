@@ -1,3 +1,4 @@
+from functools import lr
 class Solution(object):
 	def canPlaceFlowers(self, flowerbed, n):
 		"""

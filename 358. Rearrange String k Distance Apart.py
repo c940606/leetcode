@@ -1,5 +1,5 @@
 class Solution:
-    def rearrangeString(self, s: str, k: int) -> str:
+    def rearrangeString2(self, s: str, k: int) -> str:
         from collections import Counter
         n = len(s)
         cur = 1
@@ -49,9 +49,35 @@ class Solution:
                     heapq.heappush(heap, (b, a))
         return res
 
+    def rearrangeString(self, s: str, k: int) -> str:
+        from collections import Counter
+        import heapq
+        if k <= 1: return s
+        c = Counter(s)
+        n = len(s)
+        heap = [(-v, k) for k, v in c.items()]
+        heapq.heapify(heap)
+        res = ""
+        while 1:
+            #print(heap)
+            tmp = []
+            for _ in range(k):
+                if not heap:return res if len(res) == n else ""
+                num, alp = heapq.heappop(heap)
+                num += 1
+                res += alp
+                if num != 0:
+                    tmp.append((num, alp))
+            # if len(tmp) < k: break
+            for t in tmp:
+                heapq.heappush(heap, t)
+            if not heap: break
+        return res if len(res) == n else ""
+
 
 a = Solution()
-# print(a.rearrangeString1(s="aabbcc", k=3))
-# print(a.rearrangeString1(s="aaabc", k=3))
-print(a.rearrangeString1(s="aaadbbcc", k=2))
-# print(a.rearrangeString1("abcdabcdabdeac", 4))
+print(a.rearrangeString("a", 0))
+print(a.rearrangeString(s="aabbcc", k=3))
+print(a.rearrangeString(s="aaabc", k=3))
+print(a.rearrangeString(s="aaadbbcc", k=2))
+print(a.rearrangeString("abcdabcdabdeac", 4))
