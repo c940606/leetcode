@@ -21,14 +21,14 @@ class Solution(object):
 
     def lengthLongestPath(self, _input: str) -> int:
 
-        def helper(stack):
+        def cal_len(stack):
             ans = 0
             for s in stack:
                 ans += len(s[1])
+            # 多加 len(stack) - 1 个 "/"
             return ans + len(stack) - 1
 
         s = _input.split("\n")
-        # print(s)
         t = []
         for a in s:
             num = a.count("\t")
@@ -41,7 +41,7 @@ class Solution(object):
             stack.append(a)
             if "." in a[1]:
                 # print(stack)
-                res = max(res, helper(stack))
+                res = max(res, cal_len(stack))
 
         return res
 

@@ -1,5 +1,5 @@
 class Solution:
-    def uniquePathsIII(self, grid):
+    def uniquePathsIII1(self, grid):
         """
         :type grid: List[List[int]]
         :rtype: int
@@ -36,8 +36,46 @@ class Solution:
         helper(*start, 0)
         return self.res
 
+    def uniquePathsIII(self, grid):
+        #self.res = 0
+
+        m, n, empty = len(grid), len(grid[0]), 1
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    x, y = (i, j)
+                elif grid[i][j] == 2:
+                    end = (i, j)
+                elif grid[i][j] == 0:
+                    empty += 1
+
+        def dfs(x, y, empty) -> int:
+            print(x, y , empty)
+            if not (0 <= x < m and 0 <= y < n and grid[x][y] >= 0):
+                return 0
+
+            # if (x, y) == end and empty==0:
+            #     return 1
+            if (x, y) == end:
+                if empty == 0:
+                    return 1
+                else:
+                    return 0
+            res = 0
+            grid[x][y] = -1
+            res += dfs(x + 1, y, empty - 1)
+            res += dfs(x - 1, y, empty - 1)
+            res += dfs(x, y + 1, empty - 1)
+            res += dfs(x, y - 1, empty - 1)
+            grid[x][y] = 0
+            return res
+
+        return dfs(x,y, empty)
+        # return self.res
+
+
 
 a = Solution()
-print(a.uniquePathsIII([[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, -1]]))
-print(a.uniquePathsIII([[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 2]]))
+# print(a.uniquePathsIII([[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 2, -1]]))
+# print(a.uniquePathsIII([[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 2]]))
 print(a.uniquePathsIII([[0, 1], [2, 0]]))

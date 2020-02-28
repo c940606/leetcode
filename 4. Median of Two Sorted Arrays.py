@@ -5,6 +5,7 @@ class Solution:
         :type nums2: List[int]
         :rtype: float
         """
+
         n1 = len(nums1)
         n2 = len(nums2)
         if n1 > n2: return self.findMedianSortedArrays(nums2, nums1)
@@ -14,14 +15,14 @@ class Solution:
         while l < r:
             m1 = l + (r - l) // 2
             m2 = k - m1
-            print("m1,m2",m1,m2)
+            print("m1,m2", m1, m2)
             if nums1[m1] < nums2[m2 - 1]:
                 l = m1 + 1
             else:
                 r = m1
         m1 = l
         m2 = k - m1
-        print(m1,m2)
+        print(m1, m2)
         c1 = max(nums1[m1 - 1] if m1 > 0 else float("-inf"), nums2[m2 - 1] if m2 > 0 else float("-inf"))
         if (n1 + n2) % 2 == 1:
             return c1
@@ -30,6 +31,7 @@ class Solution:
 
 
 a = Solution()
+print(a.findMedianSortedArrays(nums1=[-1, 1, 3, 5, 7, 9][::-1], nums2=[2, 4, 6, 8, 10, 12, 14, 16]))
 # print(a.findMedianSortedArrays([1, 3], [2]))
-print(a.findMedianSortedArrays([-1, 1, 3], [2, 4, 6, 8]))
+# print(a.findMedianSortedArrays([-1, 1, 3], [2, 4, 6, 8]))
 # print(a.findMedianSortedArrays([2, 4, 6, 8, 10, 12, 14,16],[-1, 1, 3, 5, 7, 9]))

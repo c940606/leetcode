@@ -25,43 +25,32 @@ class Solution:
     def isRectangleCover(self, rectangles: List[List[int]]) -> bool:
 
         lookup = set()
-        left = float("inf")
-        bottom = float("inf")
-        right = float("-inf")
-        top = float("-inf")
+        # 最大矩形的 左下角 右上角
+        x1 = float("inf")
+        y1 = float("inf")
+        x2 = float("-inf")
+        y2 = float("-inf")
         area = 0
         for x, y, s, t in rectangles:
 
-            left = min(left, x)
-            bottom = min(bottom, y)
-            right = max(right, s)
-            top = max(top, t)
+            x1 = min(x1, x)
+            y1 = min(y1, y)
+            x2 = max(x2, s)
+            y2 = max(y2, t)
 
             area += (t - y) * (s - x)
-            if (x, y) not in lookup:
-                lookup.add((x, y))
-            else:
-                lookup.remove((x, y))
-            if (x, t) not in lookup:
-                lookup.add((x, t))
-            else:
-                lookup.remove((x, t))
-
-            if (s, y) not in lookup:
-                lookup.add((s, y))
-            else:
-                lookup.remove((s, y))
-            if (s, t) not in lookup:
-                lookup.add((s, t))
-            else:
-                lookup.remove((s, t))
-            # print(lookup, x, y, s, t)
-        # print(lookup, area, left, bottom, right, top)
-        if len(lookup) != 4 or (left, bottom) not in lookup or (left, top) not in lookup or (
-                right, bottom) not in lookup or (right, top) not in lookup:
+            # 每个矩形的四个点
+            for item in [(x, y), (x, t), (s, y), (s, t)]:
+                if item not in lookup:
+                    lookup.add(item)
+                else:
+                    lookup.remove(item)
+        # 只剩下四个点并且是最大矩形的左下角和右上角
+        if len(lookup) != 4 or \
+                (x1, y1) not in lookup or (x1, y2) not in lookup or (x2, y1) not in lookup or (x2, y2) not in lookup:
             return False
-
-        return (right - left) * (top - bottom) == area
+        # 面积是否满足
+        return (x2 - x1) * (y2 - y1) == area
 
 
 a = Solution()
@@ -90,4 +79,6 @@ print(a.isRectangleCover(rectangles=[
     [1, 3, 2, 4],
     [2, 2, 4, 4]
 ]))
-print(a.isRectangleCover([[0,0,4,1],[7,0,8,2],[6,2,8,3],[5,1,6,3],[4,0,5,1],[6,0,7,2],[4,2,5,3],[2,1,4,3],[0,1,2,2],[0,2,2,3],[4,1,5,2],[5,0,6,1]]))
+print(a.isRectangleCover(
+    [[0, 0, 4, 1], [7, 0, 8, 2], [6, 2, 8, 3], [5, 1, 6, 3], [4, 0, 5, 1], [6, 0, 7, 2], [4, 2, 5, 3], [2, 1, 4, 3],
+     [0, 1, 2, 2], [0, 2, 2, 3], [4, 1, 5, 2], [5, 0, 6, 1]]))
