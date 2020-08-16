@@ -1,7 +1,8 @@
 class Solution:
-    def decodeString1(self, s: str) -> str:
+    def decodeString(self, s: str) -> str:
+        pairBracket = {}
         def matchBracket(s):
-            pairBracket = {}
+
             stack = []
             for idx, val in enumerate(s):
                 if val == "[":
@@ -10,20 +11,23 @@ class Solution:
                     pairBracket[stack.pop()] = idx
             return pairBracket
 
-        # print(pairBracket)
+        pairBracket = matchBracket(s)
+        print(pairBracket)
 
-        def helper(s, pairBracket):
-            if "[" not in s:
+        def helper(left, right):
+            tmp = s[left:right+1]
+            print(tmp)
+            if "[" not in tmp:
                 return s
-            left_p = s.find("[")
+            left_p = tmp.find("[")
             right_p = pairBracket[left_p]
             i = 0
-            while not s[i].isdigit():
+            while s[i].isalpha():
                 i += 1
-            return s[:i] + int(s[i:left_p]) * helper(s[left_p + 1: right_p], matchBracket(s[left_p + 1: right_p])) + \
-                   helper(s[right_p + 1:], matchBracket(s[right_p + 1:]))
+            return s[:i] + int(s[i:left_p]) * helper(left_p, right_p) + \
+                   helper(right_p + 1, right)
 
-        return helper(s, matchBracket(s))
+        return helper(0, len(s) - 1)
 
     def decodeString2(self, s: str) -> str:
         pos = 0
@@ -50,7 +54,7 @@ class Solution:
 
         return helper()
 
-    def decodeString(self, s: str) -> str:
+    def decodeString1(self, s: str) -> str:
         stack = []
         curStr = ""
         curNum = 0
@@ -73,3 +77,5 @@ a = Solution()
 print(a.decodeString("3[a]2[bc]"))
 print(a.decodeString("3[a2[c]]"))
 print(a.decodeString("2[abc]3[cd]ef"))
+s = "dasfasd"
+s.isalpha()

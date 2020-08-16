@@ -7,3 +7,5 @@ def lcm(a, b):
 
 
 print(lcm(4, 28))
+
+

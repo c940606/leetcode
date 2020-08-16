@@ -78,7 +78,7 @@ class Solution:
             # break
         return res
 
-    def palindromePairs(self, words: List[str]) -> List[List[int]]:
+    def palindromePairs2(self, words: List[str]) -> List[List[int]]:
         """
         1. 哈希
         :param words:
@@ -113,23 +113,47 @@ class Solution:
                         res.append([idx, loc])
         return res
 
+    def palindromePairs(self, words: List[str]) -> List[List[int]]:
+
+        rev_words = {}
+        for idx, word in enumerate(words):
+            rev_words[word[::-1]] = idx
+        # print(words)
+        # print(rev_words)
+        res =[]
+        res_set = set()
+        for idx, word in enumerate(words):
+            for i in range(len(word) + 1):
+                left, right = word[:i], word[i:]
+                # print(left, right)
+                if left == left[::-1] and right in rev_words and rev_words[right] != idx:
+                    # res.append([rev_words[right], idx])
+                    res_set.add((rev_words[right], idx))
+                if right == right[::-1] and left in rev_words and rev_words[left] != idx:
+                    # res.append([idx, rev_words[left]])
+                    res_set.add((idx, rev_words[left]))
+                # print(res)
+        return list(res_set)
+
+
+
 
 a = Solution()
-print(a.palindromePairs(["a", "bacaba"]))
-print(a.palindromePairs(["afdafd", "a"]))
-print(a.palindromePairs(["a", ""]))
-print(a.palindromePairs(["", "a"]))
+# print(a.palindromePairs(["a", "bacaba"]))
+# print(a.palindromePairs(["afdafd", "a"]))
+# print(a.palindromePairs(["a", ""]))
+# print(a.palindromePairs(["", "a"]))
 print(a.palindromePairs(["abcd", "dcba", "lls", "s", "sssll"]))
-print(a.palindromePairs(["lls", "sssll"]))
-print(a.palindromePairs(["cd", "dcbab"]))
-print(a.palindromePairs(["bat", "tab", "cat"]))
-print(a.palindromePairs(["a", "", "aba"]))
-print(a.palindromePairs(["aa", "a", "aaa"]))
-print(a.palindromePairs(["aaa", "a"]))
-print(a.palindromePairs(["a", "caba"]))
-["bb", "bababab", "baab", "abaabaa", "aaba", "", "bbaa", "aba", "baa", "b"]
-print(a.palindromePairs(["abaabaa", "baab"]))
-print(a.palindromePairs(["bb", "bababab", "baab", "abaabaa", "aaba", "", "bbaa", "aba", "baa", "b"]))
+# print(a.palindromePairs(["lls", "sssll"]))
+# print(a.palindromePairs(["cd", "dcbab"]))
+# print(a.palindromePairs(["bat", "tab", "cat"]))
+# print(a.palindromePairs(["a", "", "aba"]))
+# print(a.palindromePairs(["aa", "a", "aaa"]))
+# print(a.palindromePairs(["aaa", "a"]))
+# print(a.palindromePairs(["a", "caba"]))
+# ["bb", "bababab", "baab", "abaabaa", "aaba", "", "bbaa", "aba", "baa", "b"]
+# print(a.palindromePairs(["abaabaa", "baab"]))
+# print(a.palindromePairs(["bb", "bababab", "baab", "abaabaa", "aaba", "", "bbaa", "aba", "baa", "b"]))
 # print(a.palindromePairs(["aaba", "b"]))
 # print(sorted([[9,0],[0,9],[0,5],[5,1],[8,2],[2,5],[4,3],[7,4],[4,8],[0,5],[1,5],[2,5],[7,5],[9,5],[6,0],[5,7],[8,9],[5,9]]))
 # print(sorted(

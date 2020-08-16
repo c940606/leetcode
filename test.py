@@ -21,7 +21,32 @@ def longestPalindrome(s):
 					right = (i+j+1)
 	return Max ,s[left:right+1]
 
-s= "abccba"
-s1 = "acdca"
-print(longestPalindrome(s))
-print(longestPalindrome(s1))
+
+def helper(s, p):
+    s_split = s.split()
+    p_split = p.split()
+    ans = []
+    i = 0
+    while i < len(s_split):
+        tmp_i = i
+        j = 0
+        while tmp_i < len(s_split) and j < len(p_split) and s_split[tmp_i] == p_split[j]:
+            tmp_i += 1
+            j += 1
+        if j == len(p_split):
+            for p in p_split:
+                ans.append(p + "/B")
+            i = tmp_i
+        else:
+            ans.append(s_split[i] + "/I")
+            i += 1
+    print(ans)
+    return " ".join(ans)
+
+
+print(helper("i love apple      apple", "love apple"))
+
+# s= "abccba"
+# s1 = "acdca"
+# print(longestPalindrome(s))
+# print(longestPalindrome(s1))

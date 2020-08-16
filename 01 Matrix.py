@@ -1,5 +1,6 @@
+from typing import List
 class Solution(object):
-    def updateMatrix(self, matrix):
+    def updateMatrix3(self, matrix):
         """
         :type matrix: List[List[int]]
         :rtype: List[List[int]]
@@ -102,27 +103,50 @@ class Solution(object):
             for j in range(col):
                 if matrix[i][j] == 0:
                     res[i][j] = 0
-                    stack.append((i,j))
-       # print(stack)
+                    stack.append((i, j))
+        # print(stack)
 
         while stack:
-            i,j = stack.pop()
-            for x,y in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
+            i, j = stack.pop()
+            for x, y in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
                 tmp_i = x + i
                 tmp_j = y + j
                 if tmp_i < 0 or tmp_i >= row or tmp_j < 0 or tmp_j >= col or res[tmp_i][tmp_j] <= res[i][j] + 1:
                     continue
                 res[tmp_i][tmp_j] = res[i][j] + 1
-                stack.appendleft((tmp_i,tmp_j))
+                stack.appendleft((tmp_i, tmp_j))
         return res
 
+    def updateMatrix(self, matrix: List[List[int]]) -> List[List[int]]:
+        import collections
+        zero = collections.deque()
+        row = len(matrix)
+        col = len(matrix[0])
+
+        for i in range(row):
+            for j in range(col):
+                if matrix[i][j] == 0:
+                    zero.appendleft([i, j])
+                else:
+                    matrix[i][j] = float("inf")
+        # print(zero)
+        while zero:
+            i, j = zero.pop()
+            # print(i, j)
+            for x, y in [[-1, 0], [1, 0], [0, 1], [0, -1]]:
+                tmp_i, tmp_j = i + x, j + y
+                if tmp_i < 0 or tmp_i >= row or tmp_j < 0 or tmp_j >= col or matrix[tmp_i][tmp_j] <=  matrix[i][j] + 1:
+                    continue
+                zero.appendleft([tmp_i, tmp_j])
+                matrix[tmp_i][tmp_j] = matrix[i][j] + 1
+        return matrix
 
 
 a = Solution()
-print(a.updateMatrix2([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
-print(a.updateMatrix2([[0, 0, 0], [0, 1, 0], [1, 1, 1]]))
+print(a.updateMatrix([[0, 0, 0], [0, 1, 0], [0, 0, 0]]))
+print(a.updateMatrix([[0, 0, 0], [0, 1, 0], [1, 1, 1]]))
 # print(a.updateMatrix1([]))
-print(a.updateMatrix2([[1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+print(a.updateMatrix([[1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
                         0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0,
                         0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0,
                         0, 0, 0, 0],

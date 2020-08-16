@@ -1,5 +1,6 @@
+from typing import  List
 class Solution:
-    def isBipartite(self, graph) -> bool:
+    def isBipartite4(self, graph) -> bool:
         n = len(graph)
         lookup = set()
         for g in graph:
@@ -85,11 +86,28 @@ class Solution:
                         return False
         return True
 
+    def isBipartite(self, graph: List[List[int]]) -> bool:
+
+        visited = set()
+
+        for idx, item in enumerate(graph):
+            print(visited)
+            if idx in visited:
+                for t in item:
+                    if t in visited:
+                        return False
+            else:
+                for t in item:
+                    visited.add(t)
+
+        return True
+
+
 
 a = Solution()
-print(a.isBipartite2([[1, 3], [0, 2], [1, 3], [0, 2]]))
-print(a.isBipartite2([[1, 2, 3], [0, 2], [0, 1, 3], [0, 2]]))
-print(a.isBipartite2([[1], [0, 3], [3], [1, 2]]))
+# print(a.isBipartite([[1, 3], [0, 2], [1, 3], [0, 2]]))
+# print(a.isBipartite([[1, 2, 3], [0, 2], [0, 1, 3], [0, 2]]))
+print(a.isBipartite([[1], [0, 3], [3], [1, 2]]))
 print(a.isBipartite2(
     [[], [], [5], [7], [], [2], [], [3], [], [], [17, 19], [15, 18], [15, 16, 17, 19], [15, 16, 18, 19], [15, 16, 18],
      [11, 12, 13, 14], [12, 13, 14], [10, 12], [11, 13, 14], [10, 12, 13], [25, 26, 27, 28, 29], [25, 26, 27, 28, 29],

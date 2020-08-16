@@ -35,8 +35,27 @@ class Solution:
         return helper(0, len(boxes) - 1, 0)
 
 
+    def removeBoxes2(self, boxes):
+        import functools
+
+        @functools.lru_cache(None)
+        def dfs(left, right, num):
+            if left > right: return 0
+            if left == right: return (num + 1) ** 2
+
+            while left < right and boxes[left + 1] == boxes[left]:
+                left += 1
+                num += 1
+            res = (num + 1) ** 2 + dfs(left + 1, right, 0)
+            for loc in range(left + 1, right + 1):
+                if boxes[loc] == boxes[left]:
+                    res = max(res, dfs(left + 1, loc - 1, 0) + dfs(loc, right, num + 1))
+            return res
+
+        return dfs(0, len(boxes) - 1, 0)
+
 a = Solution()
-print(a.removeBoxes((2, 1, 1, 2, 2)))
-print(a.removeBoxes((1, 3, 2, 2, 2, 3, 4, 3, 1)))
-print(a.removeBoxes((1, 2, 3, 4, 5, 6, 7, 8, 9)))
+print(a.removeBoxes2((2, 1, 1, 2, 2)))
+print(a.removeBoxes2((1, 3, 2, 2, 2, 3, 4, 3, 1)))
+print(a.removeBoxes2((1, 2, 3, 4, 5, 6, 7, 8, 9)))
 # print(a.removeBoxes())

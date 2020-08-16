@@ -5,6 +5,8 @@ class Solution:
         :type nums2: List[int]
         :rtype: float
         """
+        import bisect
+        bisect.insort([a], [x])
 
         n1 = len(nums1)
         n2 = len(nums2)

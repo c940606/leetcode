@@ -7,7 +7,7 @@ import heapq
 
 
 class Solution:
-    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+    def mergeKLists3(self, lists: List[ListNode]) -> ListNode:
         head = []
         for l in lists:
             p = l
@@ -38,3 +38,28 @@ class Solution:
                 heapq.heappush(queue, (lists[idx].val, idx))
                 lists[idx] = lists[idx].next
         return dummy.next
+
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        n = len(lists)
+
+        def merge(left, right):
+            if left > right:
+                return
+            if left == right:
+                return lists[left]
+            mid = (left + right) // 2
+            l1 = merge(left, mid)
+            l2 = merge(mid + 1, right)
+            return mergeTwoLists(l1, l2)
+
+        def mergeTwoLists(l1, l2):
+            if not l1 or not l2:
+                return l1 or l2
+            if l1.val < l2.val:
+                l1.next = mergeTwoLists(l1.next, l2)
+                return l1
+            else:
+                l2.next = mergeTwoLists(l1, l2.next)
+                return l2
+
+        return merge(0, n - 1)

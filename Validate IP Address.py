@@ -48,10 +48,8 @@ class Solution(object):
 			if len(ipv6) != 8:
 				return "Neither"
 			for num in ipv6:
-				print(num)
 				if not num or len(num) > 4 or not all(map(
-						lambda x: x.lower() in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "a", "b", "c", "d",
-												"e", "f"], num)):
+						lambda x: x.lower() in "0123456789abcdef", num)):
 					return "Neither"
 			return "IPv6"
 a = Solution()

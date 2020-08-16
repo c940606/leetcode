@@ -2,7 +2,7 @@ from typing import List
 
 
 class Solution:
-    def findPermutation(self, s: str) -> List[int]:
+    def findPermutation1(self, s: str) -> List[int]:
 
         # nums = list(range(len(s) + 1, 0, -1))
         # res = []
@@ -88,11 +88,23 @@ class Solution:
                 loc += n
         return res
 
+    def findPermutation(self, s: str) -> List[int]:
+        import itertools
+        res = list(range(1, len(s) + 2))
+        cur_loc = 0
+        for k, v in itertools.groupby(s):
+            n = len(list(v))
+            if k == "D":
+                res[cur_loc:cur_loc + n + 1] = res[cur_loc:cur_loc + n + 1][::-1]
+            cur_loc += n
+        return res
+
 
 a = Solution()
-# print(a.findPermutation("I"))
+print(a.findPermutation("DDDIDI"))
+print(a.findPermutation("I"))
 print(a.findPermutation("DI"))
-# print(a.findPermutation("DDDD"))
-# print(a.findPermutation("IIII"))
-# print(a.findPermutation("DIDIDIDD"))
-# print(a.findPermutation("D" * 10000))
+print(a.findPermutation("DDDD"))
+print(a.findPermutation("IIII"))
+print(a.findPermutation("DIDIDIDD"))
+print(a.findPermutation("D" * 10000))

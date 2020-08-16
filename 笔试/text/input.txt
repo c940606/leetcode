@@ -1,0 +1,8 @@
+1000
+3
+Shoyu 800
+Miso 850
+Tonkosto 900
+2
+Egg 100
+Sprout 150
